@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Personal Dashboard Mahasiswa - Aplikasi Manajemen Tugas, Widget Cuaca Real-time Kampus ITERA, dan Quotes Motivasi Harian.">
+  <title>StudentFlow | Personal Dashboard Mahasiswa</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- ==================== HEADER SECTION ==================== -->
+    <header class="app-header">
+      <div class="header-brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <div>
+          <h1 class="brand-title">Student<span>Flow</span></h1>
+          <p class="brand-subtitle">Personal Dashboard Mahasiswa</p>
+        </div>
+      </div>
+
+      <div class="header-info">
+        <!-- Live Clock & Date -->
+        <div class="time-card">
+          <div class="live-clock" id="liveClock">00:00:00 WIB</div>
+          <div class="live-date" id="liveDate">Memuat tanggal...</div>
+        </div>
+
+        <!-- Student Profile Badge -->
+        <div class="user-badge">
+          <div class="user-avatar">
+            <i class="fa-solid fa-user-astronaut"></i>
+          </div>
+          <div class="user-details">
+            <span class="user-name">Ivan Nandira Mangunang</span>
+            <span class="user-meta">NIM: 123140094 • Kelas RA</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ==================== GREETING BANNER ==================== -->
+    <section class="greeting-banner">
+      <div class="greeting-content">
+        <h2 id="greetingHeading">Halo, Mahasiswa! 👋</h2>
+        <p id="greetingMessage">Siap menuntaskan target akademik dan produktivitas hari ini?</p>
+      </div>
+      <div class="campus-tag">
+        <i class="fa-solid fa-building-columns"></i>
+        <span>Kampus ITERA (Institut Teknologi Sumatera)</span>
+      </div>
+    </section>
+
+    <!-- ==================== TOP WIDGETS SECTION (WEATHER, QUOTE, STATS) ==================== -->
+    <section class="widgets-grid">
+      <!-- WIDGET 1: CUACA KAMPUS REAL-TIME (Open-Meteo API) -->
+      <article class="widget-card weather-widget" id="weatherWidget">
+        <div class="widget-header">
+          <div class="widget-title-wrap">
+            <div class="widget-icon-pill icon-weather">
+              <i class="fa-solid fa-cloud-sun"></i>
+            </div>
+            <div>
+              <h3 class="widget-title">Cuaca Kampus ITERA</h3>
+              <p class="widget-meta">Lat: -5.36, Long: 105.31</p>
+            </div>
+          </div>
+          <button id="refreshWeatherBtn" class="widget-action-btn" title="Perbarui data cuaca" aria-label="Segarkan Cuaca">
+            <i class="fa-solid fa-rotate"></i>
+          </button>
+        </div>
+
+        <div class="widget-body" id="weatherBody">
+          <!-- Loaded dynamically via JavaScript Async/Await -->
+          <div class="widget-loading">
+            <div class="spinner"></div>
+            <span>Mengambil data cuaca kampus...</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- WIDGET 2: QUOTE HARIAN (DummyJSON API) -->
+      <article class="widget-card quote-widget" id="quoteWidget">
+        <div class="widget-header">
+          <div class="widget-title-wrap">
+            <div class="widget-icon-pill icon-quote">
+              <i class="fa-solid fa-quote-left"></i>
+            </div>
+            <div>
+              <h3 class="widget-title">Inspirasi & Motivasi</h3>
+              <p class="widget-meta">Kutipan Harian Mahasiswa</p>
+            </div>
+          </div>
+          <button id="refreshQuoteBtn" class="widget-action-btn" title="Kutipan baru" aria-label="Kutipan Baru">
+            <i class="fa-solid fa-dice"></i>
+          </button>
+        </div>
+
+        <div class="widget-body" id="quoteBody">
+          <!-- Loaded dynamically via JavaScript Async/Await -->
+          <div class="widget-loading">
+            <div class="spinner"></div>
+            <span>Mengambil kutipan harian...</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- WIDGET 3: QUICK STATS (Productivity Summary) -->
+      <article class="widget-card stats-widget">
+        <div class="widget-header">
+          <div class="widget-title-wrap">
+            <div class="widget-icon-pill icon-stats">
+              <i class="fa-solid fa-chart-pie"></i>
+            </div>
+            <div>
+              <h3 class="widget-title">Statistik Akademik</h3>
+              <p class="widget-meta">Pantauan Progres Tugas</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="widget-body">
+          <div class="stats-grid">
+            <div class="stat-box stat-total">
+              <span class="stat-number" id="statTotal">0</span>
+              <span class="stat-label">Total Tugas</span>
+            </div>
+            <div class="stat-box stat-pending">
+              <span class="stat-number" id="statPending">0</span>
+              <span class="stat-label">Belum Selesai</span>
+            </div>
+            <div class="stat-box stat-completed">
+              <span class="stat-number" id="statCompleted">0</span>
+              <span class="stat-label">Selesai</span>
+            </div>
+            <div class="stat-box stat-urgent">
+              <span class="stat-number" id="statUrgent">0</span>
+              <span class="stat-label">Prioritas Tinggi</span>
+            </div>
+          </div>
+
+          <div class="progress-wrap">
+            <div class="progress-info">
+              <span>Tingkat Penyelesaian</span>
+              <span id="progressPercentage">0%</span>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" id="progressBarFill" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ==================== MAIN SECTION: TO-DO LIST & TASK MANAGEMENT ==================== -->
+    <main class="main-dashboard-grid">
+      <!-- LEFT COLUMN: TASK CREATION FORM -->
+      <section class="task-form-panel">
+        <div class="card-box">
+          <div class="panel-header">
+            <div class="panel-icon">
+              <i class="fa-solid fa-circle-plus"></i>
+            </div>
+            <div>
+              <h3 class="panel-title">Tambah Tugas Baru</h3>
+              <p class="panel-subtitle">Catat tugas, praktikum, atau proyek kuliah</p>
+            </div>
+          </div>
+
+          <form id="taskForm" class="task-form" novalidate>
+            <!-- Judul Tugas -->
+            <div class="form-group">
+              <label for="taskTitle" class="form-label">
+                Judul Tugas / Mata Kuliah <span class="required">*</span>
+              </label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-book input-icon"></i>
+                <input 
+                  type="text" 
+                  id="taskTitle" 
+                  name="taskTitle" 
+                  class="form-control" 
+                  placeholder="Contoh: Laporan Praktikum Pemrograman Web M2" 
+                  required
+                  maxlength="100"
+                >
+              </div>
+              <span class="error-feedback" id="titleError"></span>
+            </div>
+
+            <!-- Kategori / Modul -->
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="taskCategory" class="form-label">
+                  Kategori / Jenis <span class="required">*</span>
+                </label>
+                <div class="input-wrapper">
+                  <i class="fa-solid fa-tags input-icon"></i>
+                  <select id="taskCategory" name="taskCategory" class="form-control select-control" required>
+                    <option value="Praktikum">🔬 Praktikum</option>
+                    <option value="Tugas Kuliah" selected>📚 Tugas Kuliah</option>
+                    <option value="Kuis & Ujian">📝 Kuis & Ujian</option>
+                    <option value="Proyek & Skripsi">💻 Proyek & Skripsi</option>
+                    <option value="Organisasi & Event">🏛️ Organisasi & Event</option>
+                    <option value="Lainnya">📌 Lainnya</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Prioritas -->
+              <div class="form-group">
+                <label for="taskPriority" class="form-label">
+                  Tingkat Prioritas <span class="required">*</span>
+                </label>
+                <div class="input-wrapper">
+                  <i class="fa-solid fa-flag input-icon"></i>
+                  <select id="taskPriority" name="taskPriority" class="form-control select-control" required>
+                    <option value="Rendah">🟢 Rendah</option>
+                    <option value="Sedang" selected>🟡 Sedang</option>
+                    <option value="Tinggi">🔴 Tinggi (Mendesak)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tenggat Waktu (Deadline) -->
+            <div class="form-group">
+              <label for="taskDeadline" class="form-label">
+                Tenggat Waktu (Deadline)
+              </label>
+              <div class="input-wrapper">
+                <i class="fa-regular fa-calendar-clock input-icon"></i>
+                <input 
+                  type="datetime-local" 
+                  id="taskDeadline" 
+                  name="taskDeadline" 
+                  class="form-control date-control"
+                >
+              </div>
+              <span class="helper-text">Kosongkan jika tidak memiliki batas waktu tetap.</span>
+            </div>
+
+            <!-- Catatan Tambahan (Notes) -->
+            <div class="form-group">
+              <label for="taskNotes" class="form-label">
+                Catatan / Deskripsi Tambahan
+              </label>
+              <div class="input-wrapper textarea-wrapper">
+                <i class="fa-solid fa-file-lines input-icon textarea-icon"></i>
+                <textarea 
+                  id="taskNotes" 
+                  name="taskNotes" 
+                  class="form-control textarea-control" 
+                  rows="3" 
+                  placeholder="Tambahkan tautan drive, catatan dosen, atau referensi materi..."
+                  maxlength="300"
+                ></textarea>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block" id="submitTaskBtn">
+              <i class="fa-solid fa-plus"></i>
+              <span>Simpan ke To-Do List</span>
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- RIGHT COLUMN: TASK LIST & FILTER PANEL -->
+      <section class="task-list-panel">
+        <div class="card-box">
+          <div class="panel-header-flex">
+            <div>
+              <h3 class="panel-title">Daftar Tugas & Catatan</h3>
+              <p class="panel-subtitle">Kelola dan selesaikan target akademik secara teratur</p>
+            </div>
+            <button id="clearAllCompletedBtn" class="btn btn-sm btn-outline-danger" title="Hapus semua tugas yang sudah selesai">
+              <i class="fa-solid fa-broom"></i>
+              <span>Bersihkan Selesai</span>
+            </button>
+          </div>
+
+          <!-- FILTERS & SEARCH TOOLBAR -->
+          <div class="toolbar-wrap">
+            <!-- Search bar -->
+            <div class="search-box">
+              <i class="fa-solid fa-magnifying-glass search-icon"></i>
+              <input 
+                type="text" 
+                id="searchTaskInput" 
+                class="search-input" 
+                placeholder="Cari tugas berdasarkan judul atau catatan..."
+                aria-label="Cari tugas"
+              >
+              <button id="clearSearchBtn" class="clear-search-btn hidden" title="Hapus pencarian">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+
+            <!-- Status Tabs -->
+            <div class="filter-tabs" role="tablist">
+              <button class="filter-tab active" data-filter="all" role="tab">
+                Semua (<span id="countFilterAll">0</span>)
+              </button>
+              <button class="filter-tab" data-filter="pending" role="tab">
+                Belum Selesai (<span id="countFilterPending">0</span>)
+              </button>
+              <button class="filter-tab" data-filter="completed" role="tab">
+                Selesai (<span id="countFilterCompleted">0</span>)
+              </button>
+            </div>
+
+            <!-- Secondary Filters (Category & Sorting) -->
+            <div class="filter-secondary-row">
+              <div class="secondary-filter-item">
+                <label for="filterCategorySelect" class="filter-label"><i class="fa-solid fa-filter"></i> Kategori:</label>
+                <select id="filterCategorySelect" class="filter-select">
+                  <option value="all">Semua Kategori</option>
+                  <option value="Praktikum">Praktikum</option>
+                  <option value="Tugas Kuliah">Tugas Kuliah</option>
+                  <option value="Kuis & Ujian">Kuis & Ujian</option>
+                  <option value="Proyek & Skripsi">Proyek & Skripsi</option>
+                  <option value="Organisasi & Event">Organisasi & Event</option>
+                  <option value="Lainnya">Lainnya</option>
+                </select>
+              </div>
+
+              <div class="secondary-filter-item">
+                <label for="sortTasksSelect" class="filter-label"><i class="fa-solid fa-arrow-down-short-wide"></i> Urutkan:</label>
+                <select id="sortTasksSelect" class="filter-select">
+                  <option value="newest">Terbaru Dibuat</option>
+                  <option value="deadline">Deadline Terdekat</option>
+                  <option value="priority">Prioritas Tertinggi</option>
+                  <option value="alphabetical">Abjad (A - Z)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- TASK LIST CONTAINER (Rendered with ES6 Template Literals) -->
+          <div class="tasks-container" id="tasksList" role="list">
+            <!-- Will be populated dynamically by DashboardApp.renderTasks() -->
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ==================== MODAL EDIT TUGAS ==================== -->
+    <div class="modal-backdrop hidden" id="editModal" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
+      <div class="modal-card">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <div class="modal-icon">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </div>
+            <div>
+              <h3 class="modal-title" id="editModalTitle">Edit Tugas Mahasiswa</h3>
+              <p class="modal-subtitle">Perbarui informasi tugas kuliah Anda</p>
+            </div>
+          </div>
+          <button class="modal-close-btn" id="closeEditModalBtn" aria-label="Tutup modal">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <form id="editTaskForm" class="modal-form" novalidate>
+          <input type="hidden" id="editTaskId">
+
+          <div class="form-group">
+            <label for="editTaskTitle" class="form-label">
+              Judul Tugas / Mata Kuliah <span class="required">*</span>
+            </label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-book input-icon"></i>
+              <input 
+                type="text" 
+                id="editTaskTitle" 
+                class="form-control" 
+                required 
+                maxlength="100"
+              >
+            </div>
+            <span class="error-feedback" id="editTitleError"></span>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="editTaskCategory" class="form-label">
+                Kategori <span class="required">*</span>
+              </label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-tags input-icon"></i>
+                <select id="editTaskCategory" class="form-control select-control" required>
+                  <option value="Praktikum">🔬 Praktikum</option>
+                  <option value="Tugas Kuliah">📚 Tugas Kuliah</option>
+                  <option value="Kuis & Ujian">📝 Kuis & Ujian</option>
+                  <option value="Proyek & Skripsi">💻 Proyek & Skripsi</option>
+                  <option value="Organisasi & Event">🏛️ Organisasi & Event</option>
+                  <option value="Lainnya">📌 Lainnya</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="editTaskPriority" class="form-label">
+                Prioritas <span class="required">*</span>
+              </label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-flag input-icon"></i>
+                <select id="editTaskPriority" class="form-control select-control" required>
+                  <option value="Rendah">🟢 Rendah</option>
+                  <option value="Sedang">🟡 Sedang</option>
+                  <option value="Tinggi">🔴 Tinggi (Mendesak)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="editTaskDeadline" class="form-label">
+              Tenggat Waktu (Deadline)
+            </label>
+            <div class="input-wrapper">
+              <i class="fa-regular fa-calendar-clock input-icon"></i>
+              <input 
+                type="datetime-local" 
+                id="editTaskDeadline" 
+                class="form-control date-control"
+              >
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="editTaskNotes" class="form-label">
+              Catatan / Deskripsi Tambahan
+            </label>
+            <div class="input-wrapper textarea-wrapper">
+              <i class="fa-solid fa-file-lines input-icon textarea-icon"></i>
+              <textarea 
+                id="editTaskNotes" 
+                class="form-control textarea-control" 
+                rows="3" 
+                maxlength="300"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="cancelEditBtn">Batal</button>
+            <button type="submit" class="btn btn-primary" id="saveEditBtn">
+              <i class="fa-solid fa-check"></i>
+              <span>Simpan Perubahan</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ==================== TOAST NOTIFICATION CONTAINER ==================== -->
+    <aside class="toast-container" id="toastContainer" aria-live="polite"></aside>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="app-footer">
+      <div class="footer-content">
+        <p class="footer-text">
+          &copy; 2026 <strong>StudentFlow</strong> — Personal Dashboard Mahasiswa. Dibuat untuk <strong>Praktikum Pemrograman Web (Pertemuan 2)</strong>.
+        </p>
+        <p class="footer-subtext">
+          Institut Teknologi Sumatera (ITERA) • <span>Ivan Nandira Mangunang (123140094)</span> • Kelas RA
+        </p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- JavaScript Module -->
+  <script src="main.js"></script>
+</body>
+</html>
