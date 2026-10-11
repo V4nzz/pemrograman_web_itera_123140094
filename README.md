@@ -6,7 +6,7 @@ Repositori ini berisi kumpulan tugas dan proyek praktikum mata kuliah **Pemrogra
 
 ## 👨‍💻 Identitas Mahasiswa
 
-- **Nama** : Ivan Nandira
+- **Nama** : Ivan Nandira Mangunang
 - **NIM** : 123140094
 - **Program Studi** : Teknik Informatika
 - **Institusi** : Institut Teknologi Sumatera (ITERA)
