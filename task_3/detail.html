@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Informasi Pendaftar</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="card-box">
+        <h2>Detail Informasi Pendaftar</h2>
+        
+        <table class="table-detail">
+            <tr>
+                <th>Nama Lengkap</th>
+                <td id="detail-nama">Ivan Nandira</td>
+            </tr>
+            <tr>
+                <th>NIM</th>
+                <td id="detail-nim">123140094</td>
+            </tr>
+            <tr>
+                <th>Program Studi</th>
+                <td id="detail-prodi">Teknik Informatika</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td id="detail-email">ivan.123140094@student.itera.ac.id</td>
+            </tr>
+            <tr>
+                <th>Status Pendaftaran</th>
+                <td>Terkonfirmasi</td>
+            </tr>
+        </table>
+
+        <div style="text-align: center;">
+            <a href="index.html" class="btn-back">Kembali ke Pendaftaran</a>
+        </div>
+    </div>
+
+    <script>
+        // Membaca Query String dari URL
+        const params = new URLSearchParams(window.location.search);
+        
+        const nama = params.get('nama');
+        const nim = params.get('nim');
+        const prodi = params.get('prodi');
+        const email = params.get('email');
+
+        // Jika terdapat parameter query string dari form submit, tampilkan data tersebut
+        if (nama) document.getElementById('detail-nama').textContent = nama;
+        if (nim) document.getElementById('detail-nim').textContent = nim;
+        if (prodi) document.getElementById('detail-prodi').textContent = prodi;
+        if (email) document.getElementById('detail-email').textContent = email;
+    </script>
+</body>
+</html>

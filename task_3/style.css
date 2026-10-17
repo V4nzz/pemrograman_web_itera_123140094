@@ -1,0 +1,113 @@
+/* 1. Element Selector */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+h2 {
+    color: #333333;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: #444;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+input:focus, select:focus {
+    border-color: #2b6cb0;
+    outline: none;
+}
+
+/* 2. Class Selector */
+.card-box {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 480px;
+    padding: 28px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    background-color: #2b6cb0;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.btn-submit:hover {
+    background-color: #2c5282;
+}
+
+.btn-back {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 18px;
+    background-color: #4a5568;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.btn-back:hover {
+    background-color: #2d3748;
+}
+
+.table-detail {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+}
+
+.table-detail th,
+.table-detail td {
+    border: 1px solid #e2e8f0;
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.table-detail th {
+    background-color: #edf2f7;
+    width: 38%;
+    color: #2d3748;
+}
+
+.table-detail td {
+    color: #4a5568;
+}
+
+/* 3. ID Selector */
+#registration-form {
+    display: block;
+}
