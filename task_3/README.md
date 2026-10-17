@@ -28,11 +28,27 @@ Tugas ini bertujuan untuk membuat halaman web sederhana yang memenuhi kriteria:
 ## 📂 Struktur Berkas
 ```plaintext
 task_3/
-├── index.html     # Halaman formulir pendaftaran (Form method GET)
-├── detail.html    # Halaman detail informasi pendaftar (Data dummy & tabel)
-├── style.css      # Styling CSS untuk layout, box, form, dan tabel
-└── README.md      # Dokumentasi tugas individu 3
+├── index.html            # Halaman formulir pendaftaran (Form method GET)
+├── detail.html           # Halaman detail informasi pendaftar (Data dummy & tabel)
+├── style.css             # Styling CSS untuk layout, box, form, dan tabel
+├── screenshot-form.png   # Tangkapan layar formulir pendaftaran
+├── screenshot-detail.png # Tangkapan layar detail informasi & query string
+└── README.md             # Dokumentasi tugas individu 3
 ```
+
+---
+
+## 📸 Tangkapan Layar (Screenshot)
+
+### 1. Halaman Formulir Pendaftaran (`index.html`)
+Tampilan halaman pendaftaran dengan formulir yang telah diisi data mahasiswa:
+
+![Tampilan Halaman Pendaftaran](./screenshot-form.png)
+
+### 2. Halaman Detail Informasi Pendaftar (`detail.html`)
+Tampilan data pendaftar yang berhasil dilempar via **Query String** ke halaman detail:
+
+![Tampilan Halaman Detail](./screenshot-detail.png)
 
 ---
 
